@@ -3,6 +3,9 @@ const app = express();
 const cors = require('cors');
 const fetch = require('node-fetch');
 
+const PORT = 8080;
+const HOST = '0.0.0.0';
+
 app.get('/1.0/identifiers/*', cors(), (req, res, next) => {
   let xx = {}
   const url = req.url
@@ -21,11 +24,10 @@ app.get('/1.0/identifiers/*', cors(), (req, res, next) => {
   })
   .then(data => { console.log('data is', data);
     console.log(data.result.diddoc)
-    res.json(JSON.parse(data.result.diddoc))
+    res.json({ "didDocument": JSON.parse(data.result.diddoc)})
   })
   .catch(error => console.log('error is', error));
 });
 
-app.listen(3000, () => {
-  console.log('server started');
-});
+app.listen(PORT, HOST);
+console.log(`Running on http://${HOST}:${PORT}`);
